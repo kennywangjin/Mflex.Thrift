@@ -23,137 +23,139 @@ using Thrift.Transport.Server;
 using Thrift.Processor;
 
 
-namespace Thrift
+namespace Mflex.Thrift
 {
 
-  public partial class TCellVisibility : TBase
-  {
-    private string _expression;
-
-    public string Expression
+    public partial class TCellVisibility : TBase
     {
-      get
-      {
-        return _expression;
-      }
-      set
-      {
-        __isset.expression = true;
-        this._expression = value;
-      }
-    }
+        private string _expression;
 
-
-    public Isset __isset;
-    public struct Isset
-    {
-      public bool expression;
-    }
-
-    public TCellVisibility()
-    {
-    }
-
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-    {
-      iprot.IncrementRecursionDepth();
-      try
-      {
-        TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
-        while (true)
+        public string Expression
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
-            break;
-          }
-
-          switch (field.ID)
-          {
-            case 1:
-              if (field.Type == TType.String)
-              {
-                Expression = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              break;
-          }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
+            get
+            {
+                return _expression;
+            }
+            set
+            {
+                __isset.expression = true;
+                this._expression = value;
+            }
         }
 
-        await iprot.ReadStructEndAsync(cancellationToken);
-      }
-      finally
-      {
-        iprot.DecrementRecursionDepth();
-      }
-    }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
-      oprot.IncrementRecursionDepth();
-      try
-      {
-        var struc = new TStruct("TCellVisibility");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        if (Expression != null && __isset.expression)
+        public Isset __isset;
+        public struct Isset
         {
-          field.Name = "expression";
-          field.Type = TType.String;
-          field.ID = 1;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Expression, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+            public bool expression;
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
-      }
-      finally
-      {
-        oprot.DecrementRecursionDepth();
-      }
-    }
 
-    public override bool Equals(object that)
-    {
-      var other = that as TCellVisibility;
-      if (other == null) return false;
-      if (ReferenceEquals(this, other)) return true;
-      return ((__isset.expression == other.__isset.expression) && ((!__isset.expression) || (System.Object.Equals(Expression, other.Expression))));
-    }
+        public TCellVisibility()
+        {
+        }
 
-    public override int GetHashCode() {
-      int hashcode = 157;
-      unchecked {
-        if(__isset.expression)
-          hashcode = (hashcode * 397) + Expression.GetHashCode();
-      }
-      return hashcode;
-    }
+        public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+        {
+            iprot.IncrementRecursionDepth();
+            try
+            {
+                TField field;
+                await iprot.ReadStructBeginAsync(cancellationToken);
+                while (true)
+                {
+                    field = await iprot.ReadFieldBeginAsync(cancellationToken);
+                    if (field.Type == TType.Stop)
+                    {
+                        break;
+                    }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("TCellVisibility(");
-      bool __first = true;
-      if (Expression != null && __isset.expression)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("Expression: ");
-        sb.Append(Expression);
-      }
-      sb.Append(")");
-      return sb.ToString();
+                    switch (field.ID)
+                    {
+                        case 1:
+                            if (field.Type == TType.String)
+                            {
+                                Expression = await iprot.ReadStringAsync(cancellationToken);
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        default:
+                            await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            break;
+                    }
+
+                    await iprot.ReadFieldEndAsync(cancellationToken);
+                }
+
+                await iprot.ReadStructEndAsync(cancellationToken);
+            }
+            finally
+            {
+                iprot.DecrementRecursionDepth();
+            }
+        }
+
+        public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+        {
+            oprot.IncrementRecursionDepth();
+            try
+            {
+                var struc = new TStruct("TCellVisibility");
+                await oprot.WriteStructBeginAsync(struc, cancellationToken);
+                var field = new TField();
+                if (Expression != null && __isset.expression)
+                {
+                    field.Name = "expression";
+                    field.Type = TType.String;
+                    field.ID = 1;
+                    await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                    await oprot.WriteStringAsync(Expression, cancellationToken);
+                    await oprot.WriteFieldEndAsync(cancellationToken);
+                }
+                await oprot.WriteFieldStopAsync(cancellationToken);
+                await oprot.WriteStructEndAsync(cancellationToken);
+            }
+            finally
+            {
+                oprot.DecrementRecursionDepth();
+            }
+        }
+
+        public override bool Equals(object that)
+        {
+            var other = that as TCellVisibility;
+            if (other == null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return ((__isset.expression == other.__isset.expression) && ((!__isset.expression) || (System.Object.Equals(Expression, other.Expression))));
+        }
+
+        public override int GetHashCode()
+        {
+            int hashcode = 157;
+            unchecked
+            {
+                if (__isset.expression)
+                    hashcode = (hashcode * 397) + Expression.GetHashCode();
+            }
+            return hashcode;
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder("TCellVisibility(");
+            bool __first = true;
+            if (Expression != null && __isset.expression)
+            {
+                if (!__first) { sb.Append(", "); }
+                __first = false;
+                sb.Append("Expression: ");
+                sb.Append(Expression);
+            }
+            sb.Append(")");
+            return sb.ToString();
+        }
     }
-  }
 
 }

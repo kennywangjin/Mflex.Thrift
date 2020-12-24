@@ -23,201 +23,203 @@ using Thrift.Transport.Server;
 using Thrift.Processor;
 
 
-namespace Thrift
+namespace Mflex.Thrift
 {
 
-  /// <summary>
-  /// Represents a single cell and the amount to increment it by
-  /// </summary>
-  public partial class TColumnIncrement : TBase
-  {
-    private long _amount;
-
-    public byte[] Family { get; set; }
-
-    public byte[] Qualifier { get; set; }
-
-    public long Amount
+    /// <summary>
+    /// Represents a single cell and the amount to increment it by
+    /// </summary>
+    public partial class TColumnIncrement : TBase
     {
-      get
-      {
-        return _amount;
-      }
-      set
-      {
-        __isset.amount = true;
-        this._amount = value;
-      }
-    }
+        private long _amount;
 
+        public byte[] Family { get; set; }
 
-    public Isset __isset;
-    public struct Isset
-    {
-      public bool amount;
-    }
+        public byte[] Qualifier { get; set; }
 
-    public TColumnIncrement()
-    {
-      this._amount = 1;
-      this.__isset.amount = true;
-    }
-
-    public TColumnIncrement(byte[] family, byte[] qualifier) : this()
-    {
-      this.Family = family;
-      this.Qualifier = qualifier;
-    }
-
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-    {
-      iprot.IncrementRecursionDepth();
-      try
-      {
-        bool isset_family = false;
-        bool isset_qualifier = false;
-        TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
-        while (true)
+        public long Amount
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
-            break;
-          }
-
-          switch (field.ID)
-          {
-            case 1:
-              if (field.Type == TType.String)
-              {
-                Family = await iprot.ReadBinaryAsync(cancellationToken);
-                isset_family = true;
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 2:
-              if (field.Type == TType.String)
-              {
-                Qualifier = await iprot.ReadBinaryAsync(cancellationToken);
-                isset_qualifier = true;
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 3:
-              if (field.Type == TType.I64)
-              {
-                Amount = await iprot.ReadI64Async(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              break;
-          }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
+            get
+            {
+                return _amount;
+            }
+            set
+            {
+                __isset.amount = true;
+                this._amount = value;
+            }
         }
 
-        await iprot.ReadStructEndAsync(cancellationToken);
-        if (!isset_family)
+
+        public Isset __isset;
+        public struct Isset
         {
-          throw new TProtocolException(TProtocolException.INVALID_DATA);
+            public bool amount;
         }
-        if (!isset_qualifier)
+
+        public TColumnIncrement()
         {
-          throw new TProtocolException(TProtocolException.INVALID_DATA);
+            this._amount = 1;
+            this.__isset.amount = true;
         }
-      }
-      finally
-      {
-        iprot.DecrementRecursionDepth();
-      }
-    }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
-      oprot.IncrementRecursionDepth();
-      try
-      {
-        var struc = new TStruct("TColumnIncrement");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        field.Name = "family";
-        field.Type = TType.String;
-        field.ID = 1;
-        await oprot.WriteFieldBeginAsync(field, cancellationToken);
-        await oprot.WriteBinaryAsync(Family, cancellationToken);
-        await oprot.WriteFieldEndAsync(cancellationToken);
-        field.Name = "qualifier";
-        field.Type = TType.String;
-        field.ID = 2;
-        await oprot.WriteFieldBeginAsync(field, cancellationToken);
-        await oprot.WriteBinaryAsync(Qualifier, cancellationToken);
-        await oprot.WriteFieldEndAsync(cancellationToken);
-        if (__isset.amount)
+        public TColumnIncrement(byte[] family, byte[] qualifier) : this()
         {
-          field.Name = "amount";
-          field.Type = TType.I64;
-          field.ID = 3;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI64Async(Amount, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+            this.Family = family;
+            this.Qualifier = qualifier;
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
-      }
-      finally
-      {
-        oprot.DecrementRecursionDepth();
-      }
-    }
 
-    public override bool Equals(object that)
-    {
-      var other = that as TColumnIncrement;
-      if (other == null) return false;
-      if (ReferenceEquals(this, other)) return true;
-      return TCollections.Equals(Family, other.Family)
-        && TCollections.Equals(Qualifier, other.Qualifier)
-        && ((__isset.amount == other.__isset.amount) && ((!__isset.amount) || (System.Object.Equals(Amount, other.Amount))));
-    }
+        public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+        {
+            iprot.IncrementRecursionDepth();
+            try
+            {
+                bool isset_family = false;
+                bool isset_qualifier = false;
+                TField field;
+                await iprot.ReadStructBeginAsync(cancellationToken);
+                while (true)
+                {
+                    field = await iprot.ReadFieldBeginAsync(cancellationToken);
+                    if (field.Type == TType.Stop)
+                    {
+                        break;
+                    }
 
-    public override int GetHashCode() {
-      int hashcode = 157;
-      unchecked {
-        hashcode = (hashcode * 397) + Family.GetHashCode();
-        hashcode = (hashcode * 397) + Qualifier.GetHashCode();
-        if(__isset.amount)
-          hashcode = (hashcode * 397) + Amount.GetHashCode();
-      }
-      return hashcode;
-    }
+                    switch (field.ID)
+                    {
+                        case 1:
+                            if (field.Type == TType.String)
+                            {
+                                Family = await iprot.ReadBinaryAsync(cancellationToken);
+                                isset_family = true;
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        case 2:
+                            if (field.Type == TType.String)
+                            {
+                                Qualifier = await iprot.ReadBinaryAsync(cancellationToken);
+                                isset_qualifier = true;
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        case 3:
+                            if (field.Type == TType.I64)
+                            {
+                                Amount = await iprot.ReadI64Async(cancellationToken);
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        default:
+                            await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            break;
+                    }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("TColumnIncrement(");
-      sb.Append(", Family: ");
-      sb.Append(Family);
-      sb.Append(", Qualifier: ");
-      sb.Append(Qualifier);
-      if (__isset.amount)
-      {
-        sb.Append(", Amount: ");
-        sb.Append(Amount);
-      }
-      sb.Append(")");
-      return sb.ToString();
+                    await iprot.ReadFieldEndAsync(cancellationToken);
+                }
+
+                await iprot.ReadStructEndAsync(cancellationToken);
+                if (!isset_family)
+                {
+                    throw new TProtocolException(TProtocolException.INVALID_DATA);
+                }
+                if (!isset_qualifier)
+                {
+                    throw new TProtocolException(TProtocolException.INVALID_DATA);
+                }
+            }
+            finally
+            {
+                iprot.DecrementRecursionDepth();
+            }
+        }
+
+        public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+        {
+            oprot.IncrementRecursionDepth();
+            try
+            {
+                var struc = new TStruct("TColumnIncrement");
+                await oprot.WriteStructBeginAsync(struc, cancellationToken);
+                var field = new TField();
+                field.Name = "family";
+                field.Type = TType.String;
+                field.ID = 1;
+                await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                await oprot.WriteBinaryAsync(Family, cancellationToken);
+                await oprot.WriteFieldEndAsync(cancellationToken);
+                field.Name = "qualifier";
+                field.Type = TType.String;
+                field.ID = 2;
+                await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                await oprot.WriteBinaryAsync(Qualifier, cancellationToken);
+                await oprot.WriteFieldEndAsync(cancellationToken);
+                if (__isset.amount)
+                {
+                    field.Name = "amount";
+                    field.Type = TType.I64;
+                    field.ID = 3;
+                    await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                    await oprot.WriteI64Async(Amount, cancellationToken);
+                    await oprot.WriteFieldEndAsync(cancellationToken);
+                }
+                await oprot.WriteFieldStopAsync(cancellationToken);
+                await oprot.WriteStructEndAsync(cancellationToken);
+            }
+            finally
+            {
+                oprot.DecrementRecursionDepth();
+            }
+        }
+
+        public override bool Equals(object that)
+        {
+            var other = that as TColumnIncrement;
+            if (other == null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return TCollections.Equals(Family, other.Family)
+              && TCollections.Equals(Qualifier, other.Qualifier)
+              && ((__isset.amount == other.__isset.amount) && ((!__isset.amount) || (System.Object.Equals(Amount, other.Amount))));
+        }
+
+        public override int GetHashCode()
+        {
+            int hashcode = 157;
+            unchecked
+            {
+                hashcode = (hashcode * 397) + Family.GetHashCode();
+                hashcode = (hashcode * 397) + Qualifier.GetHashCode();
+                if (__isset.amount)
+                    hashcode = (hashcode * 397) + Amount.GetHashCode();
+            }
+            return hashcode;
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder("TColumnIncrement(");
+            sb.Append(", Family: ");
+            sb.Append(Family);
+            sb.Append(", Qualifier: ");
+            sb.Append(Qualifier);
+            if (__isset.amount)
+            {
+                sb.Append(", Amount: ");
+                sb.Append(Amount);
+            }
+            sb.Append(")");
+            return sb.ToString();
+        }
     }
-  }
 
 }

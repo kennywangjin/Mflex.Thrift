@@ -23,323 +23,325 @@ using Thrift.Transport.Server;
 using Thrift.Processor;
 
 
-namespace Thrift
+namespace Mflex.Thrift
 {
 
-  public partial class TAppend : TBase
-  {
-    private Dictionary<byte[], byte[]> _attributes;
-    private TDurability _durability;
-    private TCellVisibility _cellVisibility;
-
-    public byte[] Row { get; set; }
-
-    public List<TColumnValue> Columns { get; set; }
-
-    public Dictionary<byte[], byte[]> Attributes
+    public partial class TAppend : TBase
     {
-      get
-      {
-        return _attributes;
-      }
-      set
-      {
-        __isset.attributes = true;
-        this._attributes = value;
-      }
-    }
+        private Dictionary<byte[], byte[]> _attributes;
+        private TDurability _durability;
+        private TCellVisibility _cellVisibility;
 
-    /// <summary>
-    /// 
-    /// <seealso cref="TDurability"/>
-    /// </summary>
-    public TDurability Durability
-    {
-      get
-      {
-        return _durability;
-      }
-      set
-      {
-        __isset.durability = true;
-        this._durability = value;
-      }
-    }
+        public byte[] Row { get; set; }
 
-    public TCellVisibility CellVisibility
-    {
-      get
-      {
-        return _cellVisibility;
-      }
-      set
-      {
-        __isset.cellVisibility = true;
-        this._cellVisibility = value;
-      }
-    }
+        public List<TColumnValue> Columns { get; set; }
 
-
-    public Isset __isset;
-    public struct Isset
-    {
-      public bool attributes;
-      public bool durability;
-      public bool cellVisibility;
-    }
-
-    public TAppend()
-    {
-    }
-
-    public TAppend(byte[] row, List<TColumnValue> columns) : this()
-    {
-      this.Row = row;
-      this.Columns = columns;
-    }
-
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-    {
-      iprot.IncrementRecursionDepth();
-      try
-      {
-        bool isset_row = false;
-        bool isset_columns = false;
-        TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
-        while (true)
+        public Dictionary<byte[], byte[]> Attributes
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
-            break;
-          }
-
-          switch (field.ID)
-          {
-            case 1:
-              if (field.Type == TType.String)
-              {
-                Row = await iprot.ReadBinaryAsync(cancellationToken);
-                isset_row = true;
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 2:
-              if (field.Type == TType.List)
-              {
-                {
-                  TList _list44 = await iprot.ReadListBeginAsync(cancellationToken);
-                  Columns = new List<TColumnValue>(_list44.Count);
-                  for(int _i45 = 0; _i45 < _list44.Count; ++_i45)
-                  {
-                    TColumnValue _elem46;
-                    _elem46 = new TColumnValue();
-                    await _elem46.ReadAsync(iprot, cancellationToken);
-                    Columns.Add(_elem46);
-                  }
-                  await iprot.ReadListEndAsync(cancellationToken);
-                }
-                isset_columns = true;
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 3:
-              if (field.Type == TType.Map)
-              {
-                {
-                  TMap _map47 = await iprot.ReadMapBeginAsync(cancellationToken);
-                  Attributes = new Dictionary<byte[], byte[]>(_map47.Count);
-                  for(int _i48 = 0; _i48 < _map47.Count; ++_i48)
-                  {
-                    byte[] _key49;
-                    byte[] _val50;
-                    _key49 = await iprot.ReadBinaryAsync(cancellationToken);
-                    _val50 = await iprot.ReadBinaryAsync(cancellationToken);
-                    Attributes[_key49] = _val50;
-                  }
-                  await iprot.ReadMapEndAsync(cancellationToken);
-                }
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 4:
-              if (field.Type == TType.I32)
-              {
-                Durability = (TDurability)await iprot.ReadI32Async(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 5:
-              if (field.Type == TType.Struct)
-              {
-                CellVisibility = new TCellVisibility();
-                await CellVisibility.ReadAsync(iprot, cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              break;
-          }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
-        }
-
-        await iprot.ReadStructEndAsync(cancellationToken);
-        if (!isset_row)
-        {
-          throw new TProtocolException(TProtocolException.INVALID_DATA);
-        }
-        if (!isset_columns)
-        {
-          throw new TProtocolException(TProtocolException.INVALID_DATA);
-        }
-      }
-      finally
-      {
-        iprot.DecrementRecursionDepth();
-      }
-    }
-
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
-      oprot.IncrementRecursionDepth();
-      try
-      {
-        var struc = new TStruct("TAppend");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        field.Name = "row";
-        field.Type = TType.String;
-        field.ID = 1;
-        await oprot.WriteFieldBeginAsync(field, cancellationToken);
-        await oprot.WriteBinaryAsync(Row, cancellationToken);
-        await oprot.WriteFieldEndAsync(cancellationToken);
-        field.Name = "columns";
-        field.Type = TType.List;
-        field.ID = 2;
-        await oprot.WriteFieldBeginAsync(field, cancellationToken);
-        {
-          await oprot.WriteListBeginAsync(new TList(TType.Struct, Columns.Count), cancellationToken);
-          foreach (TColumnValue _iter51 in Columns)
-          {
-            await _iter51.WriteAsync(oprot, cancellationToken);
-          }
-          await oprot.WriteListEndAsync(cancellationToken);
-        }
-        await oprot.WriteFieldEndAsync(cancellationToken);
-        if (Attributes != null && __isset.attributes)
-        {
-          field.Name = "attributes";
-          field.Type = TType.Map;
-          field.ID = 3;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          {
-            await oprot.WriteMapBeginAsync(new TMap(TType.String, TType.String, Attributes.Count), cancellationToken);
-            foreach (byte[] _iter52 in Attributes.Keys)
+            get
             {
-              await oprot.WriteBinaryAsync(_iter52, cancellationToken);
-              await oprot.WriteBinaryAsync(Attributes[_iter52], cancellationToken);
+                return _attributes;
             }
-            await oprot.WriteMapEndAsync(cancellationToken);
-          }
-          await oprot.WriteFieldEndAsync(cancellationToken);
+            set
+            {
+                __isset.attributes = true;
+                this._attributes = value;
+            }
         }
-        if (__isset.durability)
+
+        /// <summary>
+        /// 
+        /// <seealso cref="TDurability"/>
+        /// </summary>
+        public TDurability Durability
         {
-          field.Name = "durability";
-          field.Type = TType.I32;
-          field.ID = 4;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI32Async((int)Durability, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+            get
+            {
+                return _durability;
+            }
+            set
+            {
+                __isset.durability = true;
+                this._durability = value;
+            }
         }
-        if (CellVisibility != null && __isset.cellVisibility)
+
+        public TCellVisibility CellVisibility
         {
-          field.Name = "cellVisibility";
-          field.Type = TType.Struct;
-          field.ID = 5;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await CellVisibility.WriteAsync(oprot, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+            get
+            {
+                return _cellVisibility;
+            }
+            set
+            {
+                __isset.cellVisibility = true;
+                this._cellVisibility = value;
+            }
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
-      }
-      finally
-      {
-        oprot.DecrementRecursionDepth();
-      }
-    }
 
-    public override bool Equals(object that)
-    {
-      var other = that as TAppend;
-      if (other == null) return false;
-      if (ReferenceEquals(this, other)) return true;
-      return TCollections.Equals(Row, other.Row)
-        && TCollections.Equals(Columns, other.Columns)
-        && ((__isset.attributes == other.__isset.attributes) && ((!__isset.attributes) || (TCollections.Equals(Attributes, other.Attributes))))
-        && ((__isset.durability == other.__isset.durability) && ((!__isset.durability) || (System.Object.Equals(Durability, other.Durability))))
-        && ((__isset.cellVisibility == other.__isset.cellVisibility) && ((!__isset.cellVisibility) || (System.Object.Equals(CellVisibility, other.CellVisibility))));
-    }
 
-    public override int GetHashCode() {
-      int hashcode = 157;
-      unchecked {
-        hashcode = (hashcode * 397) + Row.GetHashCode();
-        hashcode = (hashcode * 397) + TCollections.GetHashCode(Columns);
-        if(__isset.attributes)
-          hashcode = (hashcode * 397) + TCollections.GetHashCode(Attributes);
-        if(__isset.durability)
-          hashcode = (hashcode * 397) + Durability.GetHashCode();
-        if(__isset.cellVisibility)
-          hashcode = (hashcode * 397) + CellVisibility.GetHashCode();
-      }
-      return hashcode;
-    }
+        public Isset __isset;
+        public struct Isset
+        {
+            public bool attributes;
+            public bool durability;
+            public bool cellVisibility;
+        }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("TAppend(");
-      sb.Append(", Row: ");
-      sb.Append(Row);
-      sb.Append(", Columns: ");
-      sb.Append(Columns);
-      if (Attributes != null && __isset.attributes)
-      {
-        sb.Append(", Attributes: ");
-        sb.Append(Attributes);
-      }
-      if (__isset.durability)
-      {
-        sb.Append(", Durability: ");
-        sb.Append(Durability);
-      }
-      if (CellVisibility != null && __isset.cellVisibility)
-      {
-        sb.Append(", CellVisibility: ");
-        sb.Append(CellVisibility== null ? "<null>" : CellVisibility.ToString());
-      }
-      sb.Append(")");
-      return sb.ToString();
+        public TAppend()
+        {
+        }
+
+        public TAppend(byte[] row, List<TColumnValue> columns) : this()
+        {
+            this.Row = row;
+            this.Columns = columns;
+        }
+
+        public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+        {
+            iprot.IncrementRecursionDepth();
+            try
+            {
+                bool isset_row = false;
+                bool isset_columns = false;
+                TField field;
+                await iprot.ReadStructBeginAsync(cancellationToken);
+                while (true)
+                {
+                    field = await iprot.ReadFieldBeginAsync(cancellationToken);
+                    if (field.Type == TType.Stop)
+                    {
+                        break;
+                    }
+
+                    switch (field.ID)
+                    {
+                        case 1:
+                            if (field.Type == TType.String)
+                            {
+                                Row = await iprot.ReadBinaryAsync(cancellationToken);
+                                isset_row = true;
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        case 2:
+                            if (field.Type == TType.List)
+                            {
+                                {
+                                    TList _list44 = await iprot.ReadListBeginAsync(cancellationToken);
+                                    Columns = new List<TColumnValue>(_list44.Count);
+                                    for (int _i45 = 0; _i45 < _list44.Count; ++_i45)
+                                    {
+                                        TColumnValue _elem46;
+                                        _elem46 = new TColumnValue();
+                                        await _elem46.ReadAsync(iprot, cancellationToken);
+                                        Columns.Add(_elem46);
+                                    }
+                                    await iprot.ReadListEndAsync(cancellationToken);
+                                }
+                                isset_columns = true;
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        case 3:
+                            if (field.Type == TType.Map)
+                            {
+                                {
+                                    TMap _map47 = await iprot.ReadMapBeginAsync(cancellationToken);
+                                    Attributes = new Dictionary<byte[], byte[]>(_map47.Count);
+                                    for (int _i48 = 0; _i48 < _map47.Count; ++_i48)
+                                    {
+                                        byte[] _key49;
+                                        byte[] _val50;
+                                        _key49 = await iprot.ReadBinaryAsync(cancellationToken);
+                                        _val50 = await iprot.ReadBinaryAsync(cancellationToken);
+                                        Attributes[_key49] = _val50;
+                                    }
+                                    await iprot.ReadMapEndAsync(cancellationToken);
+                                }
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        case 4:
+                            if (field.Type == TType.I32)
+                            {
+                                Durability = (TDurability)await iprot.ReadI32Async(cancellationToken);
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        case 5:
+                            if (field.Type == TType.Struct)
+                            {
+                                CellVisibility = new TCellVisibility();
+                                await CellVisibility.ReadAsync(iprot, cancellationToken);
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        default:
+                            await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            break;
+                    }
+
+                    await iprot.ReadFieldEndAsync(cancellationToken);
+                }
+
+                await iprot.ReadStructEndAsync(cancellationToken);
+                if (!isset_row)
+                {
+                    throw new TProtocolException(TProtocolException.INVALID_DATA);
+                }
+                if (!isset_columns)
+                {
+                    throw new TProtocolException(TProtocolException.INVALID_DATA);
+                }
+            }
+            finally
+            {
+                iprot.DecrementRecursionDepth();
+            }
+        }
+
+        public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+        {
+            oprot.IncrementRecursionDepth();
+            try
+            {
+                var struc = new TStruct("TAppend");
+                await oprot.WriteStructBeginAsync(struc, cancellationToken);
+                var field = new TField();
+                field.Name = "row";
+                field.Type = TType.String;
+                field.ID = 1;
+                await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                await oprot.WriteBinaryAsync(Row, cancellationToken);
+                await oprot.WriteFieldEndAsync(cancellationToken);
+                field.Name = "columns";
+                field.Type = TType.List;
+                field.ID = 2;
+                await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                {
+                    await oprot.WriteListBeginAsync(new TList(TType.Struct, Columns.Count), cancellationToken);
+                    foreach (TColumnValue _iter51 in Columns)
+                    {
+                        await _iter51.WriteAsync(oprot, cancellationToken);
+                    }
+                    await oprot.WriteListEndAsync(cancellationToken);
+                }
+                await oprot.WriteFieldEndAsync(cancellationToken);
+                if (Attributes != null && __isset.attributes)
+                {
+                    field.Name = "attributes";
+                    field.Type = TType.Map;
+                    field.ID = 3;
+                    await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                    {
+                        await oprot.WriteMapBeginAsync(new TMap(TType.String, TType.String, Attributes.Count), cancellationToken);
+                        foreach (byte[] _iter52 in Attributes.Keys)
+                        {
+                            await oprot.WriteBinaryAsync(_iter52, cancellationToken);
+                            await oprot.WriteBinaryAsync(Attributes[_iter52], cancellationToken);
+                        }
+                        await oprot.WriteMapEndAsync(cancellationToken);
+                    }
+                    await oprot.WriteFieldEndAsync(cancellationToken);
+                }
+                if (__isset.durability)
+                {
+                    field.Name = "durability";
+                    field.Type = TType.I32;
+                    field.ID = 4;
+                    await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                    await oprot.WriteI32Async((int)Durability, cancellationToken);
+                    await oprot.WriteFieldEndAsync(cancellationToken);
+                }
+                if (CellVisibility != null && __isset.cellVisibility)
+                {
+                    field.Name = "cellVisibility";
+                    field.Type = TType.Struct;
+                    field.ID = 5;
+                    await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                    await CellVisibility.WriteAsync(oprot, cancellationToken);
+                    await oprot.WriteFieldEndAsync(cancellationToken);
+                }
+                await oprot.WriteFieldStopAsync(cancellationToken);
+                await oprot.WriteStructEndAsync(cancellationToken);
+            }
+            finally
+            {
+                oprot.DecrementRecursionDepth();
+            }
+        }
+
+        public override bool Equals(object that)
+        {
+            var other = that as TAppend;
+            if (other == null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return TCollections.Equals(Row, other.Row)
+              && TCollections.Equals(Columns, other.Columns)
+              && ((__isset.attributes == other.__isset.attributes) && ((!__isset.attributes) || (TCollections.Equals(Attributes, other.Attributes))))
+              && ((__isset.durability == other.__isset.durability) && ((!__isset.durability) || (System.Object.Equals(Durability, other.Durability))))
+              && ((__isset.cellVisibility == other.__isset.cellVisibility) && ((!__isset.cellVisibility) || (System.Object.Equals(CellVisibility, other.CellVisibility))));
+        }
+
+        public override int GetHashCode()
+        {
+            int hashcode = 157;
+            unchecked
+            {
+                hashcode = (hashcode * 397) + Row.GetHashCode();
+                hashcode = (hashcode * 397) + TCollections.GetHashCode(Columns);
+                if (__isset.attributes)
+                    hashcode = (hashcode * 397) + TCollections.GetHashCode(Attributes);
+                if (__isset.durability)
+                    hashcode = (hashcode * 397) + Durability.GetHashCode();
+                if (__isset.cellVisibility)
+                    hashcode = (hashcode * 397) + CellVisibility.GetHashCode();
+            }
+            return hashcode;
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder("TAppend(");
+            sb.Append(", Row: ");
+            sb.Append(Row);
+            sb.Append(", Columns: ");
+            sb.Append(Columns);
+            if (Attributes != null && __isset.attributes)
+            {
+                sb.Append(", Attributes: ");
+                sb.Append(Attributes);
+            }
+            if (__isset.durability)
+            {
+                sb.Append(", Durability: ");
+                sb.Append(Durability);
+            }
+            if (CellVisibility != null && __isset.cellVisibility)
+            {
+                sb.Append(", CellVisibility: ");
+                sb.Append(CellVisibility == null ? "<null>" : CellVisibility.ToString());
+            }
+            sb.Append(")");
+            return sb.ToString();
+        }
     }
-  }
 
 }

@@ -23,141 +23,143 @@ using Thrift.Transport.Server;
 using Thrift.Processor;
 
 
-namespace Thrift
+namespace Mflex.Thrift
 {
 
-  /// <summary>
-  /// A TIllegalArgument exception indicates an illegal or invalid
-  /// argument was passed into a procedure.
-  /// </summary>
-  public partial class TIllegalArgument : TException, TBase
-  {
-    private string _message;
-
-    public string Message
+    /// <summary>
+    /// A TIllegalArgument exception indicates an illegal or invalid
+    /// argument was passed into a procedure.
+    /// </summary>
+    public partial class TIllegalArgument : TException, TBase
     {
-      get
-      {
-        return _message;
-      }
-      set
-      {
-        __isset.message = true;
-        this._message = value;
-      }
-    }
+        private string _message;
 
-
-    public Isset __isset;
-    public struct Isset
-    {
-      public bool message;
-    }
-
-    public TIllegalArgument()
-    {
-    }
-
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-    {
-      iprot.IncrementRecursionDepth();
-      try
-      {
-        TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
-        while (true)
+        public string Message
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
-            break;
-          }
-
-          switch (field.ID)
-          {
-            case 1:
-              if (field.Type == TType.String)
-              {
-                Message = await iprot.ReadStringAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              break;
-          }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
+            get
+            {
+                return _message;
+            }
+            set
+            {
+                __isset.message = true;
+                this._message = value;
+            }
         }
 
-        await iprot.ReadStructEndAsync(cancellationToken);
-      }
-      finally
-      {
-        iprot.DecrementRecursionDepth();
-      }
-    }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
-      oprot.IncrementRecursionDepth();
-      try
-      {
-        var struc = new TStruct("TIllegalArgument");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        if (Message != null && __isset.message)
+        public Isset __isset;
+        public struct Isset
         {
-          field.Name = "message";
-          field.Type = TType.String;
-          field.ID = 1;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteStringAsync(Message, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+            public bool message;
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
-      }
-      finally
-      {
-        oprot.DecrementRecursionDepth();
-      }
-    }
 
-    public override bool Equals(object that)
-    {
-      var other = that as TIllegalArgument;
-      if (other == null) return false;
-      if (ReferenceEquals(this, other)) return true;
-      return ((__isset.message == other.__isset.message) && ((!__isset.message) || (System.Object.Equals(Message, other.Message))));
-    }
+        public TIllegalArgument()
+        {
+        }
 
-    public override int GetHashCode() {
-      int hashcode = 157;
-      unchecked {
-        if(__isset.message)
-          hashcode = (hashcode * 397) + Message.GetHashCode();
-      }
-      return hashcode;
-    }
+        public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+        {
+            iprot.IncrementRecursionDepth();
+            try
+            {
+                TField field;
+                await iprot.ReadStructBeginAsync(cancellationToken);
+                while (true)
+                {
+                    field = await iprot.ReadFieldBeginAsync(cancellationToken);
+                    if (field.Type == TType.Stop)
+                    {
+                        break;
+                    }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("TIllegalArgument(");
-      bool __first = true;
-      if (Message != null && __isset.message)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("Message: ");
-        sb.Append(Message);
-      }
-      sb.Append(")");
-      return sb.ToString();
+                    switch (field.ID)
+                    {
+                        case 1:
+                            if (field.Type == TType.String)
+                            {
+                                Message = await iprot.ReadStringAsync(cancellationToken);
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        default:
+                            await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            break;
+                    }
+
+                    await iprot.ReadFieldEndAsync(cancellationToken);
+                }
+
+                await iprot.ReadStructEndAsync(cancellationToken);
+            }
+            finally
+            {
+                iprot.DecrementRecursionDepth();
+            }
+        }
+
+        public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+        {
+            oprot.IncrementRecursionDepth();
+            try
+            {
+                var struc = new TStruct("TIllegalArgument");
+                await oprot.WriteStructBeginAsync(struc, cancellationToken);
+                var field = new TField();
+                if (Message != null && __isset.message)
+                {
+                    field.Name = "message";
+                    field.Type = TType.String;
+                    field.ID = 1;
+                    await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                    await oprot.WriteStringAsync(Message, cancellationToken);
+                    await oprot.WriteFieldEndAsync(cancellationToken);
+                }
+                await oprot.WriteFieldStopAsync(cancellationToken);
+                await oprot.WriteStructEndAsync(cancellationToken);
+            }
+            finally
+            {
+                oprot.DecrementRecursionDepth();
+            }
+        }
+
+        public override bool Equals(object that)
+        {
+            var other = that as TIllegalArgument;
+            if (other == null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return ((__isset.message == other.__isset.message) && ((!__isset.message) || (System.Object.Equals(Message, other.Message))));
+        }
+
+        public override int GetHashCode()
+        {
+            int hashcode = 157;
+            unchecked
+            {
+                if (__isset.message)
+                    hashcode = (hashcode * 397) + Message.GetHashCode();
+            }
+            return hashcode;
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder("TIllegalArgument(");
+            bool __first = true;
+            if (Message != null && __isset.message)
+            {
+                if (!__first) { sb.Append(", "); }
+                __first = false;
+                sb.Append("Message: ");
+                sb.Append(Message);
+            }
+            sb.Append(")");
+            return sb.ToString();
+        }
     }
-  }
 
 }

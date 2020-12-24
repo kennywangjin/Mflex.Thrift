@@ -5,20 +5,20 @@
  *  @generated
  */
 
-namespace Thrift
+namespace Mflex.Thrift
 {
-  /// <summary>
-  /// Thrift wrapper around
-  /// org.apache.hadoop.hbase.filter.CompareFilter$CompareOp.
-  /// </summary>
-  public enum TCompareOp
-  {
-    LESS = 0,
-    LESS_OR_EQUAL = 1,
-    EQUAL = 2,
-    NOT_EQUAL = 3,
-    GREATER_OR_EQUAL = 4,
-    GREATER = 5,
-    NO_OP = 6,
-  }
+    /// <summary>
+    /// Thrift wrapper around
+    /// org.apache.hadoop.hbase.filter.CompareFilter$CompareOp.
+    /// </summary>
+    public enum TCompareOp
+    {
+        LESS = 0,
+        LESS_OR_EQUAL = 1,
+        EQUAL = 2,
+        NOT_EQUAL = 3,
+        GREATER_OR_EQUAL = 4,
+        GREATER = 5,
+        NO_OP = 6,
+    }
 }

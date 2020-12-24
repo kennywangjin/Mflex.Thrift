@@ -23,154 +23,156 @@ using Thrift.Transport.Server;
 using Thrift.Processor;
 
 
-namespace Thrift
+namespace Mflex.Thrift
 {
 
-  public partial class TAuthorization : TBase
-  {
-    private List<string> _labels;
-
-    public List<string> Labels
+    public partial class TAuthorization : TBase
     {
-      get
-      {
-        return _labels;
-      }
-      set
-      {
-        __isset.labels = true;
-        this._labels = value;
-      }
-    }
+        private List<string> _labels;
 
-
-    public Isset __isset;
-    public struct Isset
-    {
-      public bool labels;
-    }
-
-    public TAuthorization()
-    {
-    }
-
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-    {
-      iprot.IncrementRecursionDepth();
-      try
-      {
-        TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
-        while (true)
+        public List<string> Labels
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
-            break;
-          }
-
-          switch (field.ID)
-          {
-            case 1:
-              if (field.Type == TType.List)
-              {
-                {
-                  TList _list4 = await iprot.ReadListBeginAsync(cancellationToken);
-                  Labels = new List<string>(_list4.Count);
-                  for(int _i5 = 0; _i5 < _list4.Count; ++_i5)
-                  {
-                    string _elem6;
-                    _elem6 = await iprot.ReadStringAsync(cancellationToken);
-                    Labels.Add(_elem6);
-                  }
-                  await iprot.ReadListEndAsync(cancellationToken);
-                }
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              break;
-          }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
-        }
-
-        await iprot.ReadStructEndAsync(cancellationToken);
-      }
-      finally
-      {
-        iprot.DecrementRecursionDepth();
-      }
-    }
-
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
-      oprot.IncrementRecursionDepth();
-      try
-      {
-        var struc = new TStruct("TAuthorization");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        if (Labels != null && __isset.labels)
-        {
-          field.Name = "labels";
-          field.Type = TType.List;
-          field.ID = 1;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          {
-            await oprot.WriteListBeginAsync(new TList(TType.String, Labels.Count), cancellationToken);
-            foreach (string _iter7 in Labels)
+            get
             {
-              await oprot.WriteStringAsync(_iter7, cancellationToken);
+                return _labels;
             }
-            await oprot.WriteListEndAsync(cancellationToken);
-          }
-          await oprot.WriteFieldEndAsync(cancellationToken);
+            set
+            {
+                __isset.labels = true;
+                this._labels = value;
+            }
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
-      }
-      finally
-      {
-        oprot.DecrementRecursionDepth();
-      }
-    }
 
-    public override bool Equals(object that)
-    {
-      var other = that as TAuthorization;
-      if (other == null) return false;
-      if (ReferenceEquals(this, other)) return true;
-      return ((__isset.labels == other.__isset.labels) && ((!__isset.labels) || (TCollections.Equals(Labels, other.Labels))));
-    }
 
-    public override int GetHashCode() {
-      int hashcode = 157;
-      unchecked {
-        if(__isset.labels)
-          hashcode = (hashcode * 397) + TCollections.GetHashCode(Labels);
-      }
-      return hashcode;
-    }
+        public Isset __isset;
+        public struct Isset
+        {
+            public bool labels;
+        }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("TAuthorization(");
-      bool __first = true;
-      if (Labels != null && __isset.labels)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("Labels: ");
-        sb.Append(Labels);
-      }
-      sb.Append(")");
-      return sb.ToString();
+        public TAuthorization()
+        {
+        }
+
+        public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+        {
+            iprot.IncrementRecursionDepth();
+            try
+            {
+                TField field;
+                await iprot.ReadStructBeginAsync(cancellationToken);
+                while (true)
+                {
+                    field = await iprot.ReadFieldBeginAsync(cancellationToken);
+                    if (field.Type == TType.Stop)
+                    {
+                        break;
+                    }
+
+                    switch (field.ID)
+                    {
+                        case 1:
+                            if (field.Type == TType.List)
+                            {
+                                {
+                                    TList _list4 = await iprot.ReadListBeginAsync(cancellationToken);
+                                    Labels = new List<string>(_list4.Count);
+                                    for (int _i5 = 0; _i5 < _list4.Count; ++_i5)
+                                    {
+                                        string _elem6;
+                                        _elem6 = await iprot.ReadStringAsync(cancellationToken);
+                                        Labels.Add(_elem6);
+                                    }
+                                    await iprot.ReadListEndAsync(cancellationToken);
+                                }
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        default:
+                            await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            break;
+                    }
+
+                    await iprot.ReadFieldEndAsync(cancellationToken);
+                }
+
+                await iprot.ReadStructEndAsync(cancellationToken);
+            }
+            finally
+            {
+                iprot.DecrementRecursionDepth();
+            }
+        }
+
+        public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+        {
+            oprot.IncrementRecursionDepth();
+            try
+            {
+                var struc = new TStruct("TAuthorization");
+                await oprot.WriteStructBeginAsync(struc, cancellationToken);
+                var field = new TField();
+                if (Labels != null && __isset.labels)
+                {
+                    field.Name = "labels";
+                    field.Type = TType.List;
+                    field.ID = 1;
+                    await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                    {
+                        await oprot.WriteListBeginAsync(new TList(TType.String, Labels.Count), cancellationToken);
+                        foreach (string _iter7 in Labels)
+                        {
+                            await oprot.WriteStringAsync(_iter7, cancellationToken);
+                        }
+                        await oprot.WriteListEndAsync(cancellationToken);
+                    }
+                    await oprot.WriteFieldEndAsync(cancellationToken);
+                }
+                await oprot.WriteFieldStopAsync(cancellationToken);
+                await oprot.WriteStructEndAsync(cancellationToken);
+            }
+            finally
+            {
+                oprot.DecrementRecursionDepth();
+            }
+        }
+
+        public override bool Equals(object that)
+        {
+            var other = that as TAuthorization;
+            if (other == null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return ((__isset.labels == other.__isset.labels) && ((!__isset.labels) || (TCollections.Equals(Labels, other.Labels))));
+        }
+
+        public override int GetHashCode()
+        {
+            int hashcode = 157;
+            unchecked
+            {
+                if (__isset.labels)
+                    hashcode = (hashcode * 397) + TCollections.GetHashCode(Labels);
+            }
+            return hashcode;
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder("TAuthorization(");
+            bool __first = true;
+            if (Labels != null && __isset.labels)
+            {
+                if (!__first) { sb.Append(", "); }
+                __first = false;
+                sb.Append("Labels: ");
+                sb.Append(Labels);
+            }
+            sb.Append(")");
+            return sb.ToString();
+        }
     }
-  }
 
 }

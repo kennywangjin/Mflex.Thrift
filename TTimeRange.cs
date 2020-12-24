@@ -23,148 +23,150 @@ using Thrift.Transport.Server;
 using Thrift.Processor;
 
 
-namespace Thrift
+namespace Mflex.Thrift
 {
 
-  public partial class TTimeRange : TBase
-  {
-
-    public long MinStamp { get; set; }
-
-    public long MaxStamp { get; set; }
-
-    public TTimeRange()
+    public partial class TTimeRange : TBase
     {
-    }
 
-    public TTimeRange(long minStamp, long maxStamp) : this()
-    {
-      this.MinStamp = minStamp;
-      this.MaxStamp = maxStamp;
-    }
+        public long MinStamp { get; set; }
 
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-    {
-      iprot.IncrementRecursionDepth();
-      try
-      {
-        bool isset_minStamp = false;
-        bool isset_maxStamp = false;
-        TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
-        while (true)
+        public long MaxStamp { get; set; }
+
+        public TTimeRange()
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
-            break;
-          }
-
-          switch (field.ID)
-          {
-            case 1:
-              if (field.Type == TType.I64)
-              {
-                MinStamp = await iprot.ReadI64Async(cancellationToken);
-                isset_minStamp = true;
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 2:
-              if (field.Type == TType.I64)
-              {
-                MaxStamp = await iprot.ReadI64Async(cancellationToken);
-                isset_maxStamp = true;
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              break;
-          }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
         }
 
-        await iprot.ReadStructEndAsync(cancellationToken);
-        if (!isset_minStamp)
+        public TTimeRange(long minStamp, long maxStamp) : this()
         {
-          throw new TProtocolException(TProtocolException.INVALID_DATA);
+            this.MinStamp = minStamp;
+            this.MaxStamp = maxStamp;
         }
-        if (!isset_maxStamp)
+
+        public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
         {
-          throw new TProtocolException(TProtocolException.INVALID_DATA);
+            iprot.IncrementRecursionDepth();
+            try
+            {
+                bool isset_minStamp = false;
+                bool isset_maxStamp = false;
+                TField field;
+                await iprot.ReadStructBeginAsync(cancellationToken);
+                while (true)
+                {
+                    field = await iprot.ReadFieldBeginAsync(cancellationToken);
+                    if (field.Type == TType.Stop)
+                    {
+                        break;
+                    }
+
+                    switch (field.ID)
+                    {
+                        case 1:
+                            if (field.Type == TType.I64)
+                            {
+                                MinStamp = await iprot.ReadI64Async(cancellationToken);
+                                isset_minStamp = true;
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        case 2:
+                            if (field.Type == TType.I64)
+                            {
+                                MaxStamp = await iprot.ReadI64Async(cancellationToken);
+                                isset_maxStamp = true;
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        default:
+                            await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            break;
+                    }
+
+                    await iprot.ReadFieldEndAsync(cancellationToken);
+                }
+
+                await iprot.ReadStructEndAsync(cancellationToken);
+                if (!isset_minStamp)
+                {
+                    throw new TProtocolException(TProtocolException.INVALID_DATA);
+                }
+                if (!isset_maxStamp)
+                {
+                    throw new TProtocolException(TProtocolException.INVALID_DATA);
+                }
+            }
+            finally
+            {
+                iprot.DecrementRecursionDepth();
+            }
         }
-      }
-      finally
-      {
-        iprot.DecrementRecursionDepth();
-      }
-    }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
-      oprot.IncrementRecursionDepth();
-      try
-      {
-        var struc = new TStruct("TTimeRange");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        field.Name = "minStamp";
-        field.Type = TType.I64;
-        field.ID = 1;
-        await oprot.WriteFieldBeginAsync(field, cancellationToken);
-        await oprot.WriteI64Async(MinStamp, cancellationToken);
-        await oprot.WriteFieldEndAsync(cancellationToken);
-        field.Name = "maxStamp";
-        field.Type = TType.I64;
-        field.ID = 2;
-        await oprot.WriteFieldBeginAsync(field, cancellationToken);
-        await oprot.WriteI64Async(MaxStamp, cancellationToken);
-        await oprot.WriteFieldEndAsync(cancellationToken);
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
-      }
-      finally
-      {
-        oprot.DecrementRecursionDepth();
-      }
-    }
+        public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+        {
+            oprot.IncrementRecursionDepth();
+            try
+            {
+                var struc = new TStruct("TTimeRange");
+                await oprot.WriteStructBeginAsync(struc, cancellationToken);
+                var field = new TField();
+                field.Name = "minStamp";
+                field.Type = TType.I64;
+                field.ID = 1;
+                await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                await oprot.WriteI64Async(MinStamp, cancellationToken);
+                await oprot.WriteFieldEndAsync(cancellationToken);
+                field.Name = "maxStamp";
+                field.Type = TType.I64;
+                field.ID = 2;
+                await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                await oprot.WriteI64Async(MaxStamp, cancellationToken);
+                await oprot.WriteFieldEndAsync(cancellationToken);
+                await oprot.WriteFieldStopAsync(cancellationToken);
+                await oprot.WriteStructEndAsync(cancellationToken);
+            }
+            finally
+            {
+                oprot.DecrementRecursionDepth();
+            }
+        }
 
-    public override bool Equals(object that)
-    {
-      var other = that as TTimeRange;
-      if (other == null) return false;
-      if (ReferenceEquals(this, other)) return true;
-      return System.Object.Equals(MinStamp, other.MinStamp)
-        && System.Object.Equals(MaxStamp, other.MaxStamp);
-    }
+        public override bool Equals(object that)
+        {
+            var other = that as TTimeRange;
+            if (other == null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return System.Object.Equals(MinStamp, other.MinStamp)
+              && System.Object.Equals(MaxStamp, other.MaxStamp);
+        }
 
-    public override int GetHashCode() {
-      int hashcode = 157;
-      unchecked {
-        hashcode = (hashcode * 397) + MinStamp.GetHashCode();
-        hashcode = (hashcode * 397) + MaxStamp.GetHashCode();
-      }
-      return hashcode;
-    }
+        public override int GetHashCode()
+        {
+            int hashcode = 157;
+            unchecked
+            {
+                hashcode = (hashcode * 397) + MinStamp.GetHashCode();
+                hashcode = (hashcode * 397) + MaxStamp.GetHashCode();
+            }
+            return hashcode;
+        }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("TTimeRange(");
-      sb.Append(", MinStamp: ");
-      sb.Append(MinStamp);
-      sb.Append(", MaxStamp: ");
-      sb.Append(MaxStamp);
-      sb.Append(")");
-      return sb.ToString();
+        public override string ToString()
+        {
+            var sb = new StringBuilder("TTimeRange(");
+            sb.Append(", MinStamp: ");
+            sb.Append(MinStamp);
+            sb.Append(", MaxStamp: ");
+            sb.Append(MaxStamp);
+            sb.Append(")");
+            return sb.ToString();
+        }
     }
-  }
 
 }

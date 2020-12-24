@@ -23,214 +23,216 @@ using Thrift.Transport.Server;
 using Thrift.Processor;
 
 
-namespace Thrift
+namespace Mflex.Thrift
 {
 
-  /// <summary>
-  /// Addresses a single cell or multiple cells
-  /// in a HBase table by column family and optionally
-  /// a column qualifier and timestamp
-  /// </summary>
-  public partial class TColumn : TBase
-  {
-    private byte[] _qualifier;
-    private long _timestamp;
-
-    public byte[] Family { get; set; }
-
-    public byte[] Qualifier
+    /// <summary>
+    /// Addresses a single cell or multiple cells
+    /// in a HBase table by column family and optionally
+    /// a column qualifier and timestamp
+    /// </summary>
+    public partial class TColumn : TBase
     {
-      get
-      {
-        return _qualifier;
-      }
-      set
-      {
-        __isset.qualifier = true;
-        this._qualifier = value;
-      }
-    }
+        private byte[] _qualifier;
+        private long _timestamp;
 
-    public long Timestamp
-    {
-      get
-      {
-        return _timestamp;
-      }
-      set
-      {
-        __isset.timestamp = true;
-        this._timestamp = value;
-      }
-    }
+        public byte[] Family { get; set; }
 
-
-    public Isset __isset;
-    public struct Isset
-    {
-      public bool qualifier;
-      public bool timestamp;
-    }
-
-    public TColumn()
-    {
-    }
-
-    public TColumn(byte[] family) : this()
-    {
-      this.Family = family;
-    }
-
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-    {
-      iprot.IncrementRecursionDepth();
-      try
-      {
-        bool isset_family = false;
-        TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
-        while (true)
+        public byte[] Qualifier
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
-            break;
-          }
-
-          switch (field.ID)
-          {
-            case 1:
-              if (field.Type == TType.String)
-              {
-                Family = await iprot.ReadBinaryAsync(cancellationToken);
-                isset_family = true;
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 2:
-              if (field.Type == TType.String)
-              {
-                Qualifier = await iprot.ReadBinaryAsync(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 3:
-              if (field.Type == TType.I64)
-              {
-                Timestamp = await iprot.ReadI64Async(cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              break;
-          }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
+            get
+            {
+                return _qualifier;
+            }
+            set
+            {
+                __isset.qualifier = true;
+                this._qualifier = value;
+            }
         }
 
-        await iprot.ReadStructEndAsync(cancellationToken);
-        if (!isset_family)
+        public long Timestamp
         {
-          throw new TProtocolException(TProtocolException.INVALID_DATA);
+            get
+            {
+                return _timestamp;
+            }
+            set
+            {
+                __isset.timestamp = true;
+                this._timestamp = value;
+            }
         }
-      }
-      finally
-      {
-        iprot.DecrementRecursionDepth();
-      }
-    }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
-      oprot.IncrementRecursionDepth();
-      try
-      {
-        var struc = new TStruct("TColumn");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        field.Name = "family";
-        field.Type = TType.String;
-        field.ID = 1;
-        await oprot.WriteFieldBeginAsync(field, cancellationToken);
-        await oprot.WriteBinaryAsync(Family, cancellationToken);
-        await oprot.WriteFieldEndAsync(cancellationToken);
-        if (Qualifier != null && __isset.qualifier)
+
+        public Isset __isset;
+        public struct Isset
         {
-          field.Name = "qualifier";
-          field.Type = TType.String;
-          field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteBinaryAsync(Qualifier, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+            public bool qualifier;
+            public bool timestamp;
         }
-        if (__isset.timestamp)
+
+        public TColumn()
         {
-          field.Name = "timestamp";
-          field.Type = TType.I64;
-          field.ID = 3;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await oprot.WriteI64Async(Timestamp, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
-      }
-      finally
-      {
-        oprot.DecrementRecursionDepth();
-      }
-    }
 
-    public override bool Equals(object that)
-    {
-      var other = that as TColumn;
-      if (other == null) return false;
-      if (ReferenceEquals(this, other)) return true;
-      return TCollections.Equals(Family, other.Family)
-        && ((__isset.qualifier == other.__isset.qualifier) && ((!__isset.qualifier) || (TCollections.Equals(Qualifier, other.Qualifier))))
-        && ((__isset.timestamp == other.__isset.timestamp) && ((!__isset.timestamp) || (System.Object.Equals(Timestamp, other.Timestamp))));
-    }
+        public TColumn(byte[] family) : this()
+        {
+            this.Family = family;
+        }
 
-    public override int GetHashCode() {
-      int hashcode = 157;
-      unchecked {
-        hashcode = (hashcode * 397) + Family.GetHashCode();
-        if(__isset.qualifier)
-          hashcode = (hashcode * 397) + Qualifier.GetHashCode();
-        if(__isset.timestamp)
-          hashcode = (hashcode * 397) + Timestamp.GetHashCode();
-      }
-      return hashcode;
-    }
+        public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+        {
+            iprot.IncrementRecursionDepth();
+            try
+            {
+                bool isset_family = false;
+                TField field;
+                await iprot.ReadStructBeginAsync(cancellationToken);
+                while (true)
+                {
+                    field = await iprot.ReadFieldBeginAsync(cancellationToken);
+                    if (field.Type == TType.Stop)
+                    {
+                        break;
+                    }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("TColumn(");
-      sb.Append(", Family: ");
-      sb.Append(Family);
-      if (Qualifier != null && __isset.qualifier)
-      {
-        sb.Append(", Qualifier: ");
-        sb.Append(Qualifier);
-      }
-      if (__isset.timestamp)
-      {
-        sb.Append(", Timestamp: ");
-        sb.Append(Timestamp);
-      }
-      sb.Append(")");
-      return sb.ToString();
+                    switch (field.ID)
+                    {
+                        case 1:
+                            if (field.Type == TType.String)
+                            {
+                                Family = await iprot.ReadBinaryAsync(cancellationToken);
+                                isset_family = true;
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        case 2:
+                            if (field.Type == TType.String)
+                            {
+                                Qualifier = await iprot.ReadBinaryAsync(cancellationToken);
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        case 3:
+                            if (field.Type == TType.I64)
+                            {
+                                Timestamp = await iprot.ReadI64Async(cancellationToken);
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        default:
+                            await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            break;
+                    }
+
+                    await iprot.ReadFieldEndAsync(cancellationToken);
+                }
+
+                await iprot.ReadStructEndAsync(cancellationToken);
+                if (!isset_family)
+                {
+                    throw new TProtocolException(TProtocolException.INVALID_DATA);
+                }
+            }
+            finally
+            {
+                iprot.DecrementRecursionDepth();
+            }
+        }
+
+        public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+        {
+            oprot.IncrementRecursionDepth();
+            try
+            {
+                var struc = new TStruct("TColumn");
+                await oprot.WriteStructBeginAsync(struc, cancellationToken);
+                var field = new TField();
+                field.Name = "family";
+                field.Type = TType.String;
+                field.ID = 1;
+                await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                await oprot.WriteBinaryAsync(Family, cancellationToken);
+                await oprot.WriteFieldEndAsync(cancellationToken);
+                if (Qualifier != null && __isset.qualifier)
+                {
+                    field.Name = "qualifier";
+                    field.Type = TType.String;
+                    field.ID = 2;
+                    await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                    await oprot.WriteBinaryAsync(Qualifier, cancellationToken);
+                    await oprot.WriteFieldEndAsync(cancellationToken);
+                }
+                if (__isset.timestamp)
+                {
+                    field.Name = "timestamp";
+                    field.Type = TType.I64;
+                    field.ID = 3;
+                    await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                    await oprot.WriteI64Async(Timestamp, cancellationToken);
+                    await oprot.WriteFieldEndAsync(cancellationToken);
+                }
+                await oprot.WriteFieldStopAsync(cancellationToken);
+                await oprot.WriteStructEndAsync(cancellationToken);
+            }
+            finally
+            {
+                oprot.DecrementRecursionDepth();
+            }
+        }
+
+        public override bool Equals(object that)
+        {
+            var other = that as TColumn;
+            if (other == null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return TCollections.Equals(Family, other.Family)
+              && ((__isset.qualifier == other.__isset.qualifier) && ((!__isset.qualifier) || (TCollections.Equals(Qualifier, other.Qualifier))))
+              && ((__isset.timestamp == other.__isset.timestamp) && ((!__isset.timestamp) || (System.Object.Equals(Timestamp, other.Timestamp))));
+        }
+
+        public override int GetHashCode()
+        {
+            int hashcode = 157;
+            unchecked
+            {
+                hashcode = (hashcode * 397) + Family.GetHashCode();
+                if (__isset.qualifier)
+                    hashcode = (hashcode * 397) + Qualifier.GetHashCode();
+                if (__isset.timestamp)
+                    hashcode = (hashcode * 397) + Timestamp.GetHashCode();
+            }
+            return hashcode;
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder("TColumn(");
+            sb.Append(", Family: ");
+            sb.Append(Family);
+            if (Qualifier != null && __isset.qualifier)
+            {
+                sb.Append(", Qualifier: ");
+                sb.Append(Qualifier);
+            }
+            if (__isset.timestamp)
+            {
+                sb.Append(", Timestamp: ");
+                sb.Append(Timestamp);
+            }
+            sb.Append(")");
+            return sb.ToString();
+        }
     }
-  }
 
 }

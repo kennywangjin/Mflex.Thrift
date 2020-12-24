@@ -5,18 +5,18 @@
  *  @generated
  */
 
-namespace Thrift
+namespace Mflex.Thrift
 {
-  /// <summary>
-  /// Specify type of delete:
-  ///  - DELETE_COLUMN means exactly one version will be removed,
-  ///  - DELETE_COLUMNS means previous versions will also be removed.
-  /// </summary>
-  public enum TDeleteType
-  {
-    DELETE_COLUMN = 0,
-    DELETE_COLUMNS = 1,
-    DELETE_FAMILY = 2,
-    DELETE_FAMILY_VERSION = 3,
-  }
+    /// <summary>
+    /// Specify type of delete:
+    ///  - DELETE_COLUMN means exactly one version will be removed,
+    ///  - DELETE_COLUMNS means previous versions will also be removed.
+    /// </summary>
+    public enum TDeleteType
+    {
+        DELETE_COLUMN = 0,
+        DELETE_COLUMNS = 1,
+        DELETE_FAMILY = 2,
+        DELETE_FAMILY_VERSION = 3,
+    }
 }

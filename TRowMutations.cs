@@ -23,169 +23,171 @@ using Thrift.Transport.Server;
 using Thrift.Processor;
 
 
-namespace Thrift
+namespace Mflex.Thrift
 {
 
-  /// <summary>
-  /// A TRowMutations object is used to apply a number of Mutations to a single row.
-  /// </summary>
-  public partial class TRowMutations : TBase
-  {
-
-    public byte[] Row { get; set; }
-
-    public List<TMutation> Mutations { get; set; }
-
-    public TRowMutations()
+    /// <summary>
+    /// A TRowMutations object is used to apply a number of Mutations to a single row.
+    /// </summary>
+    public partial class TRowMutations : TBase
     {
-    }
 
-    public TRowMutations(byte[] row, List<TMutation> mutations) : this()
-    {
-      this.Row = row;
-      this.Mutations = mutations;
-    }
+        public byte[] Row { get; set; }
 
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-    {
-      iprot.IncrementRecursionDepth();
-      try
-      {
-        bool isset_row = false;
-        bool isset_mutations = false;
-        TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
-        while (true)
+        public List<TMutation> Mutations { get; set; }
+
+        public TRowMutations()
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
-            break;
-          }
+        }
 
-          switch (field.ID)
-          {
-            case 1:
-              if (field.Type == TType.String)
-              {
-                Row = await iprot.ReadBinaryAsync(cancellationToken);
-                isset_row = true;
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 2:
-              if (field.Type == TType.List)
-              {
+        public TRowMutations(byte[] row, List<TMutation> mutations) : this()
+        {
+            this.Row = row;
+            this.Mutations = mutations;
+        }
+
+        public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+        {
+            iprot.IncrementRecursionDepth();
+            try
+            {
+                bool isset_row = false;
+                bool isset_mutations = false;
+                TField field;
+                await iprot.ReadStructBeginAsync(cancellationToken);
+                while (true)
                 {
-                  TList _list67 = await iprot.ReadListBeginAsync(cancellationToken);
-                  Mutations = new List<TMutation>(_list67.Count);
-                  for(int _i68 = 0; _i68 < _list67.Count; ++_i68)
-                  {
-                    TMutation _elem69;
-                    _elem69 = new TMutation();
-                    await _elem69.ReadAsync(iprot, cancellationToken);
-                    Mutations.Add(_elem69);
-                  }
-                  await iprot.ReadListEndAsync(cancellationToken);
+                    field = await iprot.ReadFieldBeginAsync(cancellationToken);
+                    if (field.Type == TType.Stop)
+                    {
+                        break;
+                    }
+
+                    switch (field.ID)
+                    {
+                        case 1:
+                            if (field.Type == TType.String)
+                            {
+                                Row = await iprot.ReadBinaryAsync(cancellationToken);
+                                isset_row = true;
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        case 2:
+                            if (field.Type == TType.List)
+                            {
+                                {
+                                    TList _list67 = await iprot.ReadListBeginAsync(cancellationToken);
+                                    Mutations = new List<TMutation>(_list67.Count);
+                                    for (int _i68 = 0; _i68 < _list67.Count; ++_i68)
+                                    {
+                                        TMutation _elem69;
+                                        _elem69 = new TMutation();
+                                        await _elem69.ReadAsync(iprot, cancellationToken);
+                                        Mutations.Add(_elem69);
+                                    }
+                                    await iprot.ReadListEndAsync(cancellationToken);
+                                }
+                                isset_mutations = true;
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        default:
+                            await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            break;
+                    }
+
+                    await iprot.ReadFieldEndAsync(cancellationToken);
                 }
-                isset_mutations = true;
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              break;
-          }
 
-          await iprot.ReadFieldEndAsync(cancellationToken);
+                await iprot.ReadStructEndAsync(cancellationToken);
+                if (!isset_row)
+                {
+                    throw new TProtocolException(TProtocolException.INVALID_DATA);
+                }
+                if (!isset_mutations)
+                {
+                    throw new TProtocolException(TProtocolException.INVALID_DATA);
+                }
+            }
+            finally
+            {
+                iprot.DecrementRecursionDepth();
+            }
         }
 
-        await iprot.ReadStructEndAsync(cancellationToken);
-        if (!isset_row)
+        public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
         {
-          throw new TProtocolException(TProtocolException.INVALID_DATA);
+            oprot.IncrementRecursionDepth();
+            try
+            {
+                var struc = new TStruct("TRowMutations");
+                await oprot.WriteStructBeginAsync(struc, cancellationToken);
+                var field = new TField();
+                field.Name = "row";
+                field.Type = TType.String;
+                field.ID = 1;
+                await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                await oprot.WriteBinaryAsync(Row, cancellationToken);
+                await oprot.WriteFieldEndAsync(cancellationToken);
+                field.Name = "mutations";
+                field.Type = TType.List;
+                field.ID = 2;
+                await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                {
+                    await oprot.WriteListBeginAsync(new TList(TType.Struct, Mutations.Count), cancellationToken);
+                    foreach (TMutation _iter70 in Mutations)
+                    {
+                        await _iter70.WriteAsync(oprot, cancellationToken);
+                    }
+                    await oprot.WriteListEndAsync(cancellationToken);
+                }
+                await oprot.WriteFieldEndAsync(cancellationToken);
+                await oprot.WriteFieldStopAsync(cancellationToken);
+                await oprot.WriteStructEndAsync(cancellationToken);
+            }
+            finally
+            {
+                oprot.DecrementRecursionDepth();
+            }
         }
-        if (!isset_mutations)
+
+        public override bool Equals(object that)
         {
-          throw new TProtocolException(TProtocolException.INVALID_DATA);
+            var other = that as TRowMutations;
+            if (other == null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return TCollections.Equals(Row, other.Row)
+              && TCollections.Equals(Mutations, other.Mutations);
         }
-      }
-      finally
-      {
-        iprot.DecrementRecursionDepth();
-      }
-    }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
-      oprot.IncrementRecursionDepth();
-      try
-      {
-        var struc = new TStruct("TRowMutations");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        field.Name = "row";
-        field.Type = TType.String;
-        field.ID = 1;
-        await oprot.WriteFieldBeginAsync(field, cancellationToken);
-        await oprot.WriteBinaryAsync(Row, cancellationToken);
-        await oprot.WriteFieldEndAsync(cancellationToken);
-        field.Name = "mutations";
-        field.Type = TType.List;
-        field.ID = 2;
-        await oprot.WriteFieldBeginAsync(field, cancellationToken);
+        public override int GetHashCode()
         {
-          await oprot.WriteListBeginAsync(new TList(TType.Struct, Mutations.Count), cancellationToken);
-          foreach (TMutation _iter70 in Mutations)
-          {
-            await _iter70.WriteAsync(oprot, cancellationToken);
-          }
-          await oprot.WriteListEndAsync(cancellationToken);
+            int hashcode = 157;
+            unchecked
+            {
+                hashcode = (hashcode * 397) + Row.GetHashCode();
+                hashcode = (hashcode * 397) + TCollections.GetHashCode(Mutations);
+            }
+            return hashcode;
         }
-        await oprot.WriteFieldEndAsync(cancellationToken);
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
-      }
-      finally
-      {
-        oprot.DecrementRecursionDepth();
-      }
-    }
 
-    public override bool Equals(object that)
-    {
-      var other = that as TRowMutations;
-      if (other == null) return false;
-      if (ReferenceEquals(this, other)) return true;
-      return TCollections.Equals(Row, other.Row)
-        && TCollections.Equals(Mutations, other.Mutations);
+        public override string ToString()
+        {
+            var sb = new StringBuilder("TRowMutations(");
+            sb.Append(", Row: ");
+            sb.Append(Row);
+            sb.Append(", Mutations: ");
+            sb.Append(Mutations);
+            sb.Append(")");
+            return sb.ToString();
+        }
     }
-
-    public override int GetHashCode() {
-      int hashcode = 157;
-      unchecked {
-        hashcode = (hashcode * 397) + Row.GetHashCode();
-        hashcode = (hashcode * 397) + TCollections.GetHashCode(Mutations);
-      }
-      return hashcode;
-    }
-
-    public override string ToString()
-    {
-      var sb = new StringBuilder("TRowMutations(");
-      sb.Append(", Row: ");
-      sb.Append(Row);
-      sb.Append(", Mutations: ");
-      sb.Append(Mutations);
-      sb.Append(")");
-      return sb.ToString();
-    }
-  }
 
 }

@@ -23,150 +23,152 @@ using Thrift.Transport.Server;
 using Thrift.Processor;
 
 
-namespace Thrift
+namespace Mflex.Thrift
 {
 
-  public partial class THRegionLocation : TBase
-  {
-
-    public TServerName ServerName { get; set; }
-
-    public THRegionInfo RegionInfo { get; set; }
-
-    public THRegionLocation()
+    public partial class THRegionLocation : TBase
     {
-    }
 
-    public THRegionLocation(TServerName serverName, THRegionInfo regionInfo) : this()
-    {
-      this.ServerName = serverName;
-      this.RegionInfo = regionInfo;
-    }
+        public TServerName ServerName { get; set; }
 
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-    {
-      iprot.IncrementRecursionDepth();
-      try
-      {
-        bool isset_serverName = false;
-        bool isset_regionInfo = false;
-        TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
-        while (true)
+        public THRegionInfo RegionInfo { get; set; }
+
+        public THRegionLocation()
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
-            break;
-          }
-
-          switch (field.ID)
-          {
-            case 1:
-              if (field.Type == TType.Struct)
-              {
-                ServerName = new TServerName();
-                await ServerName.ReadAsync(iprot, cancellationToken);
-                isset_serverName = true;
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 2:
-              if (field.Type == TType.Struct)
-              {
-                RegionInfo = new THRegionInfo();
-                await RegionInfo.ReadAsync(iprot, cancellationToken);
-                isset_regionInfo = true;
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              break;
-          }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
         }
 
-        await iprot.ReadStructEndAsync(cancellationToken);
-        if (!isset_serverName)
+        public THRegionLocation(TServerName serverName, THRegionInfo regionInfo) : this()
         {
-          throw new TProtocolException(TProtocolException.INVALID_DATA);
+            this.ServerName = serverName;
+            this.RegionInfo = regionInfo;
         }
-        if (!isset_regionInfo)
+
+        public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
         {
-          throw new TProtocolException(TProtocolException.INVALID_DATA);
+            iprot.IncrementRecursionDepth();
+            try
+            {
+                bool isset_serverName = false;
+                bool isset_regionInfo = false;
+                TField field;
+                await iprot.ReadStructBeginAsync(cancellationToken);
+                while (true)
+                {
+                    field = await iprot.ReadFieldBeginAsync(cancellationToken);
+                    if (field.Type == TType.Stop)
+                    {
+                        break;
+                    }
+
+                    switch (field.ID)
+                    {
+                        case 1:
+                            if (field.Type == TType.Struct)
+                            {
+                                ServerName = new TServerName();
+                                await ServerName.ReadAsync(iprot, cancellationToken);
+                                isset_serverName = true;
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        case 2:
+                            if (field.Type == TType.Struct)
+                            {
+                                RegionInfo = new THRegionInfo();
+                                await RegionInfo.ReadAsync(iprot, cancellationToken);
+                                isset_regionInfo = true;
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        default:
+                            await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            break;
+                    }
+
+                    await iprot.ReadFieldEndAsync(cancellationToken);
+                }
+
+                await iprot.ReadStructEndAsync(cancellationToken);
+                if (!isset_serverName)
+                {
+                    throw new TProtocolException(TProtocolException.INVALID_DATA);
+                }
+                if (!isset_regionInfo)
+                {
+                    throw new TProtocolException(TProtocolException.INVALID_DATA);
+                }
+            }
+            finally
+            {
+                iprot.DecrementRecursionDepth();
+            }
         }
-      }
-      finally
-      {
-        iprot.DecrementRecursionDepth();
-      }
-    }
 
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
-      oprot.IncrementRecursionDepth();
-      try
-      {
-        var struc = new TStruct("THRegionLocation");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        field.Name = "serverName";
-        field.Type = TType.Struct;
-        field.ID = 1;
-        await oprot.WriteFieldBeginAsync(field, cancellationToken);
-        await ServerName.WriteAsync(oprot, cancellationToken);
-        await oprot.WriteFieldEndAsync(cancellationToken);
-        field.Name = "regionInfo";
-        field.Type = TType.Struct;
-        field.ID = 2;
-        await oprot.WriteFieldBeginAsync(field, cancellationToken);
-        await RegionInfo.WriteAsync(oprot, cancellationToken);
-        await oprot.WriteFieldEndAsync(cancellationToken);
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
-      }
-      finally
-      {
-        oprot.DecrementRecursionDepth();
-      }
-    }
+        public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+        {
+            oprot.IncrementRecursionDepth();
+            try
+            {
+                var struc = new TStruct("THRegionLocation");
+                await oprot.WriteStructBeginAsync(struc, cancellationToken);
+                var field = new TField();
+                field.Name = "serverName";
+                field.Type = TType.Struct;
+                field.ID = 1;
+                await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                await ServerName.WriteAsync(oprot, cancellationToken);
+                await oprot.WriteFieldEndAsync(cancellationToken);
+                field.Name = "regionInfo";
+                field.Type = TType.Struct;
+                field.ID = 2;
+                await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                await RegionInfo.WriteAsync(oprot, cancellationToken);
+                await oprot.WriteFieldEndAsync(cancellationToken);
+                await oprot.WriteFieldStopAsync(cancellationToken);
+                await oprot.WriteStructEndAsync(cancellationToken);
+            }
+            finally
+            {
+                oprot.DecrementRecursionDepth();
+            }
+        }
 
-    public override bool Equals(object that)
-    {
-      var other = that as THRegionLocation;
-      if (other == null) return false;
-      if (ReferenceEquals(this, other)) return true;
-      return System.Object.Equals(ServerName, other.ServerName)
-        && System.Object.Equals(RegionInfo, other.RegionInfo);
-    }
+        public override bool Equals(object that)
+        {
+            var other = that as THRegionLocation;
+            if (other == null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return System.Object.Equals(ServerName, other.ServerName)
+              && System.Object.Equals(RegionInfo, other.RegionInfo);
+        }
 
-    public override int GetHashCode() {
-      int hashcode = 157;
-      unchecked {
-        hashcode = (hashcode * 397) + ServerName.GetHashCode();
-        hashcode = (hashcode * 397) + RegionInfo.GetHashCode();
-      }
-      return hashcode;
-    }
+        public override int GetHashCode()
+        {
+            int hashcode = 157;
+            unchecked
+            {
+                hashcode = (hashcode * 397) + ServerName.GetHashCode();
+                hashcode = (hashcode * 397) + RegionInfo.GetHashCode();
+            }
+            return hashcode;
+        }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("THRegionLocation(");
-      sb.Append(", ServerName: ");
-      sb.Append(ServerName== null ? "<null>" : ServerName.ToString());
-      sb.Append(", RegionInfo: ");
-      sb.Append(RegionInfo== null ? "<null>" : RegionInfo.ToString());
-      sb.Append(")");
-      return sb.ToString();
+        public override string ToString()
+        {
+            var sb = new StringBuilder("THRegionLocation(");
+            sb.Append(", ServerName: ");
+            sb.Append(ServerName == null ? "<null>" : ServerName.ToString());
+            sb.Append(", RegionInfo: ");
+            sb.Append(RegionInfo == null ? "<null>" : RegionInfo.ToString());
+            sb.Append(")");
+            return sb.ToString();
+        }
     }
-  }
 
 }

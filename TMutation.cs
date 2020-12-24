@@ -23,186 +23,188 @@ using Thrift.Transport.Server;
 using Thrift.Processor;
 
 
-namespace Thrift
+namespace Mflex.Thrift
 {
 
-  /// <summary>
-  /// Atomic mutation for the specified row. It can be either Put or Delete.
-  /// </summary>
-  public partial class TMutation : TBase
-  {
-    private TPut _put;
-    private TDelete _deleteSingle;
-
-    public TPut Put
+    /// <summary>
+    /// Atomic mutation for the specified row. It can be either Put or Delete.
+    /// </summary>
+    public partial class TMutation : TBase
     {
-      get
-      {
-        return _put;
-      }
-      set
-      {
-        __isset.put = true;
-        this._put = value;
-      }
-    }
+        private TPut _put;
+        private TDelete _deleteSingle;
 
-    public TDelete DeleteSingle
-    {
-      get
-      {
-        return _deleteSingle;
-      }
-      set
-      {
-        __isset.deleteSingle = true;
-        this._deleteSingle = value;
-      }
-    }
-
-
-    public Isset __isset;
-    public struct Isset
-    {
-      public bool put;
-      public bool deleteSingle;
-    }
-
-    public TMutation()
-    {
-    }
-
-    public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
-    {
-      iprot.IncrementRecursionDepth();
-      try
-      {
-        TField field;
-        await iprot.ReadStructBeginAsync(cancellationToken);
-        while (true)
+        public TPut Put
         {
-          field = await iprot.ReadFieldBeginAsync(cancellationToken);
-          if (field.Type == TType.Stop)
-          {
-            break;
-          }
-
-          switch (field.ID)
-          {
-            case 1:
-              if (field.Type == TType.Struct)
-              {
-                Put = new TPut();
-                await Put.ReadAsync(iprot, cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            case 2:
-              if (field.Type == TType.Struct)
-              {
-                DeleteSingle = new TDelete();
-                await DeleteSingle.ReadAsync(iprot, cancellationToken);
-              }
-              else
-              {
-                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              }
-              break;
-            default: 
-              await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
-              break;
-          }
-
-          await iprot.ReadFieldEndAsync(cancellationToken);
+            get
+            {
+                return _put;
+            }
+            set
+            {
+                __isset.put = true;
+                this._put = value;
+            }
         }
 
-        await iprot.ReadStructEndAsync(cancellationToken);
-      }
-      finally
-      {
-        iprot.DecrementRecursionDepth();
-      }
-    }
-
-    public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
-    {
-      oprot.IncrementRecursionDepth();
-      try
-      {
-        var struc = new TStruct("TMutation");
-        await oprot.WriteStructBeginAsync(struc, cancellationToken);
-        var field = new TField();
-        if (Put != null && __isset.put)
+        public TDelete DeleteSingle
         {
-          field.Name = "put";
-          field.Type = TType.Struct;
-          field.ID = 1;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await Put.WriteAsync(oprot, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+            get
+            {
+                return _deleteSingle;
+            }
+            set
+            {
+                __isset.deleteSingle = true;
+                this._deleteSingle = value;
+            }
         }
-        if (DeleteSingle != null && __isset.deleteSingle)
+
+
+        public Isset __isset;
+        public struct Isset
         {
-          field.Name = "deleteSingle";
-          field.Type = TType.Struct;
-          field.ID = 2;
-          await oprot.WriteFieldBeginAsync(field, cancellationToken);
-          await DeleteSingle.WriteAsync(oprot, cancellationToken);
-          await oprot.WriteFieldEndAsync(cancellationToken);
+            public bool put;
+            public bool deleteSingle;
         }
-        await oprot.WriteFieldStopAsync(cancellationToken);
-        await oprot.WriteStructEndAsync(cancellationToken);
-      }
-      finally
-      {
-        oprot.DecrementRecursionDepth();
-      }
-    }
 
-    public override bool Equals(object that)
-    {
-      var other = that as TMutation;
-      if (other == null) return false;
-      if (ReferenceEquals(this, other)) return true;
-      return ((__isset.put == other.__isset.put) && ((!__isset.put) || (System.Object.Equals(Put, other.Put))))
-        && ((__isset.deleteSingle == other.__isset.deleteSingle) && ((!__isset.deleteSingle) || (System.Object.Equals(DeleteSingle, other.DeleteSingle))));
-    }
+        public TMutation()
+        {
+        }
 
-    public override int GetHashCode() {
-      int hashcode = 157;
-      unchecked {
-        if(__isset.put)
-          hashcode = (hashcode * 397) + Put.GetHashCode();
-        if(__isset.deleteSingle)
-          hashcode = (hashcode * 397) + DeleteSingle.GetHashCode();
-      }
-      return hashcode;
-    }
+        public async Task ReadAsync(TProtocol iprot, CancellationToken cancellationToken)
+        {
+            iprot.IncrementRecursionDepth();
+            try
+            {
+                TField field;
+                await iprot.ReadStructBeginAsync(cancellationToken);
+                while (true)
+                {
+                    field = await iprot.ReadFieldBeginAsync(cancellationToken);
+                    if (field.Type == TType.Stop)
+                    {
+                        break;
+                    }
 
-    public override string ToString()
-    {
-      var sb = new StringBuilder("TMutation(");
-      bool __first = true;
-      if (Put != null && __isset.put)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("Put: ");
-        sb.Append(Put== null ? "<null>" : Put.ToString());
-      }
-      if (DeleteSingle != null && __isset.deleteSingle)
-      {
-        if(!__first) { sb.Append(", "); }
-        __first = false;
-        sb.Append("DeleteSingle: ");
-        sb.Append(DeleteSingle== null ? "<null>" : DeleteSingle.ToString());
-      }
-      sb.Append(")");
-      return sb.ToString();
+                    switch (field.ID)
+                    {
+                        case 1:
+                            if (field.Type == TType.Struct)
+                            {
+                                Put = new TPut();
+                                await Put.ReadAsync(iprot, cancellationToken);
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        case 2:
+                            if (field.Type == TType.Struct)
+                            {
+                                DeleteSingle = new TDelete();
+                                await DeleteSingle.ReadAsync(iprot, cancellationToken);
+                            }
+                            else
+                            {
+                                await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            }
+                            break;
+                        default:
+                            await TProtocolUtil.SkipAsync(iprot, field.Type, cancellationToken);
+                            break;
+                    }
+
+                    await iprot.ReadFieldEndAsync(cancellationToken);
+                }
+
+                await iprot.ReadStructEndAsync(cancellationToken);
+            }
+            finally
+            {
+                iprot.DecrementRecursionDepth();
+            }
+        }
+
+        public async Task WriteAsync(TProtocol oprot, CancellationToken cancellationToken)
+        {
+            oprot.IncrementRecursionDepth();
+            try
+            {
+                var struc = new TStruct("TMutation");
+                await oprot.WriteStructBeginAsync(struc, cancellationToken);
+                var field = new TField();
+                if (Put != null && __isset.put)
+                {
+                    field.Name = "put";
+                    field.Type = TType.Struct;
+                    field.ID = 1;
+                    await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                    await Put.WriteAsync(oprot, cancellationToken);
+                    await oprot.WriteFieldEndAsync(cancellationToken);
+                }
+                if (DeleteSingle != null && __isset.deleteSingle)
+                {
+                    field.Name = "deleteSingle";
+                    field.Type = TType.Struct;
+                    field.ID = 2;
+                    await oprot.WriteFieldBeginAsync(field, cancellationToken);
+                    await DeleteSingle.WriteAsync(oprot, cancellationToken);
+                    await oprot.WriteFieldEndAsync(cancellationToken);
+                }
+                await oprot.WriteFieldStopAsync(cancellationToken);
+                await oprot.WriteStructEndAsync(cancellationToken);
+            }
+            finally
+            {
+                oprot.DecrementRecursionDepth();
+            }
+        }
+
+        public override bool Equals(object that)
+        {
+            var other = that as TMutation;
+            if (other == null) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return ((__isset.put == other.__isset.put) && ((!__isset.put) || (System.Object.Equals(Put, other.Put))))
+              && ((__isset.deleteSingle == other.__isset.deleteSingle) && ((!__isset.deleteSingle) || (System.Object.Equals(DeleteSingle, other.DeleteSingle))));
+        }
+
+        public override int GetHashCode()
+        {
+            int hashcode = 157;
+            unchecked
+            {
+                if (__isset.put)
+                    hashcode = (hashcode * 397) + Put.GetHashCode();
+                if (__isset.deleteSingle)
+                    hashcode = (hashcode * 397) + DeleteSingle.GetHashCode();
+            }
+            return hashcode;
+        }
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder("TMutation(");
+            bool __first = true;
+            if (Put != null && __isset.put)
+            {
+                if (!__first) { sb.Append(", "); }
+                __first = false;
+                sb.Append("Put: ");
+                sb.Append(Put == null ? "<null>" : Put.ToString());
+            }
+            if (DeleteSingle != null && __isset.deleteSingle)
+            {
+                if (!__first) { sb.Append(", "); }
+                __first = false;
+                sb.Append("DeleteSingle: ");
+                sb.Append(DeleteSingle == null ? "<null>" : DeleteSingle.ToString());
+            }
+            sb.Append(")");
+            return sb.ToString();
+        }
     }
-  }
 
 }

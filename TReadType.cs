@@ -5,12 +5,12 @@
  *  @generated
  */
 
-namespace Thrift
+namespace Mflex.Thrift
 {
-  public enum TReadType
-  {
-    DEFAULT = 1,
-    STREAM = 2,
-    PREAD = 3,
-  }
+    public enum TReadType
+    {
+        DEFAULT = 1,
+        STREAM = 2,
+        PREAD = 3,
+    }
 }
