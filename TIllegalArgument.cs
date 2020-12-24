@@ -34,7 +34,7 @@ namespace Mflex.Thrift
     {
         private string _message;
 
-        public string Message
+        public new string Message
         {
             get
             {
